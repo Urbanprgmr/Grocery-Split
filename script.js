@@ -127,10 +127,14 @@ addItemForm.addEventListener('submit', (e) => {
 addMemberForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const name = document.getElementById('member-name').value;
-  members.push({ name });
-  localStorage.setItem('members', JSON.stringify(members));
-  initialize();
-  addMemberForm.reset();
+  if (name) {
+    members.push({ name });
+    localStorage.setItem('members', JSON.stringify(members));
+    initialize();
+    addMemberForm.reset();
+  } else {
+    alert('Please enter a valid member name.');
+  }
 });
 
 // Assign Item
@@ -139,10 +143,14 @@ assignItemForm.addEventListener('submit', (e) => {
   const item = assignItemSelect.value;
   const member = assignMemberSelect.value;
   const quantity = parseInt(document.getElementById('assign-quantity').value);
-  assignments.push({ item, member, quantity });
-  localStorage.setItem('assignments', JSON.stringify(assignments));
-  initialize();
-  assignItemForm.reset();
+  if (item && member && quantity > 0) {
+    assignments.push({ item, member, quantity });
+    localStorage.setItem('assignments', JSON.stringify(assignments));
+    initialize();
+    assignItemForm.reset();
+  } else {
+    alert('Please fill out all fields correctly.');
+  }
 });
 
 // Edit Item
