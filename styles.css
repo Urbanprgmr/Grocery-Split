@@ -1,156 +1,60 @@
-/* Base Styles and Resets */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
+/* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-    margin: 0;
-    font-size: 16px; /* Ensuring better readability on mobile */
-    line-height: 1.4;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  margin: 0;
+  padding: 0;
 }
 
-/* Header */
-header h1 {
-    text-align: center;
-    padding: 1rem;
-    background-color: #007bff;
-    color: white;
-    margin: 0;
-}
-
-/* Main container layout */
 .container {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start; /* Prevent sections from stretching unevenly */
-    gap: 1rem;
-    padding: 1rem;
-    max-width: 800px;
-    margin: auto;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
-/* Input Section */
-.input-section, .results-section {
-    flex: 1 1 300px; /* Flexibly grow/shrink, with a minimum width of 300px each */
+h1, h2 {
+  color: #444;
 }
 
-/* Form Styles */
-#addItemForm {
-    max-width: 400px;
-    margin: auto;
-    background: white;
-    padding: 1rem;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+form {
+  margin-bottom: 20px;
 }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 0.75rem;
+input, select, button {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: calc(100% - 22px);
 }
 
-.form-group label {
-    margin-bottom: 0.25rem;
-    font-weight: bold;
-}
-
-.form-group input,
-.form-group select {
-    padding: 0.5rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-}
-
-/* Button Styles */
 button {
-    font-size: 1rem;
-    padding: 0.6rem 1.2rem;
-    border: none;
-    border-radius: 4px;
-    background: #28a745;
-    color: white;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 0.5rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
 button:hover {
-    background: #218838;
+  background-color: #218838;
 }
 
-button:active {
-    background: #1e7e34;
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
-/* Table Styles */
-.table-container {
-    width: 100%;
-    overflow-x: auto; /* Enable horizontal scrolling for tables on small screens */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
-#itemsTable {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 500px; /* Minimum table width to allow scrolling on mobile */
-    background: white;
-}
-
-#itemsTable th, 
-#itemsTable td {
-    padding: 0.5rem;
-    border: 1px solid #ddd;
-    text-align: left;
-    white-space: nowrap; /* Prevent text from wrapping, so table can scroll horizontally */
-}
-
-#itemsTable th {
-    background: #007bff;
-    color: white;
-}
-
-/* Summary Styles */
-#summary {
-    margin-top: 1rem;
-    background: white;
-    padding: 1rem;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-#summary h3 {
-    margin-top: 0;
-}
-
-#summary ul {
-    padding-left: 1.2rem;
-}
-
-/* Responsive Adjustments for Small Screens */
-@media (max-width: 600px) {
-    .container {
-        flex-direction: column; /* Stack sections vertically on narrow screens */
-        padding: 0.5rem;
-    }
-
-    #addItemForm {
-        width: 100%;
-    }
-
-    /* Make form elements and button full-width on mobile for easier tapping */
-    .form-group input,
-    .form-group select {
-        width: 100%;
-    }
-
-    button {
-        width: 100%;
-    }
+th {
+  background-color: #f8f9fa;
 }
