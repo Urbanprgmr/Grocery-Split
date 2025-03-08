@@ -58,3 +58,29 @@ th, td {
 th {
   background-color: #f8f9fa;
 }
+
+#assigned-items {
+  margin-top: 20px;
+}
+
+.member-assignments {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.member-assignments h3 {
+  margin-top: 0;
+}
+
+.assigned-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.assigned-item:last-child {
+  border-bottom: none;
+}
