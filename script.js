@@ -18,19 +18,32 @@ function formatCurrency(amount) {
   return `MVR ${amount.toFixed(2)}`;
 }
 
-// Render Items
+// Helper function to calculate remaining quantity
+function getRemainingQuantity(itemName) {
+  const totalAssigned = assignments
+    .filter(a => a.item === itemName)
+    .reduce((sum, a) => sum + a.quantity, 0);
+  const item = items.find(i => i.name === itemName);
+  return item ? item.quantity - totalAssigned : 0;
+}
+
+// Render Items with Remaining Quantity
 function renderItems() {
-  groceryList.innerHTML = items.map((item, index) => `
-    <tr>
-      <td>${item.name}</td>
-      <td>${formatCurrency(item.price)}</td>
-      <td>${item.quantity}</td>
-      <td>
-        <button onclick="editItem(${index})">Edit</button>
-        <button onclick="deleteItem(${index})">Delete</button>
-      </td>
-    </tr>
-  `).join('');
+  groceryList.innerHTML = items.map((item, index) => {
+    const remainingQuantity = getRemainingQuantity(item.name);
+    return `
+      <tr>
+        <td>${item.name}</td>
+        <td>${formatCurrency(item.price)}</td>
+        <td>${item.quantity}</td>
+        <td>${remainingQuantity}</td>
+        <td>
+          <button onclick="editItem(${index})">Edit</button>
+          <button onclick="deleteItem(${index})">Delete</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
 }
 
 // Render Members
