@@ -57,6 +57,105 @@ function updateItemDropdown() {
     });
 }
 
-// Initialize Data on Load
+function addMember() {
+    let name = document.getElementById("memberName").value.trim();
+    let itemName = document.getElementById("selectItem").value;
+    let quantity = parseInt(document.getElementById("assignQuantity").value);
+
+    let item = items.find(i => i.name === itemName);
+    if (!name || isNaN(quantity) || !item || quantity <= 0 || item.remaining < quantity) {
+        alert("Invalid assignment");
+        return;
+    }
+
+    let cost = quantity * item.price;
+    members.push({ name, itemName, quantity, cost });
+    
+    if (!payments[name]) {
+        payments[name] = { total: 0, paid: false };
+    }
+    payments[name].total += cost;
+
+    item.remaining -= quantity;
+    saveData();
+    updateMembersTable();
+    updateUnclaimedTable();
+    updatePaymentsTable();
+
+    document.getElementById("memberName").value = "";
+    document.getElementById("assignQuantity").value = "";
+}
+
+function updateMembersTable() {
+    let tbody = document.querySelector("#membersTable tbody");
+    tbody.innerHTML = "";
+    members.forEach((member, index) => {
+        let row = tbody.insertRow();
+        row.innerHTML = `<td>${member.name}</td><td>${member.itemName}</td><td>${member.quantity}</td>
+                         <td>MVR ${member.cost.toFixed(2)}</td>
+                         <td><button onclick="deleteMember(${index})">Delete</button></td>`;
+    });
+}
+
+function deleteMember(index) {
+    let member = members[index];
+    let item = items.find(i => i.name === member.itemName);
+    item.remaining += member.quantity;
+    delete payments[member.name];
+    members.splice(index, 1);
+    saveData();
+    updateMembersTable();
+    updateUnclaimedTable();
+    updatePaymentsTable();
+}
+
+function updateUnclaimedTable() {
+    let tbody = document.querySelector("#unclaimedTable tbody");
+    tbody.innerHTML = "";
+    items.forEach(item => {
+        if (item.remaining > 0) {
+            let row = tbody.insertRow();
+            row.innerHTML = `<td>${item.name}</td><td>${item.remaining}</td><td>MVR ${(item.remaining * item.price).toFixed(2)}</td>`;
+        }
+    });
+}
+
+function updatePaymentsTable() {
+    let tbody = document.querySelector("#paymentsTable tbody");
+    tbody.innerHTML = "";
+    for (let member in payments) {
+        let row = tbody.insertRow();
+        row.innerHTML = `<td>${member}</td><td>MVR ${payments[member].total.toFixed(2)}</td>
+                        <td>${payments[member].paid ? "Paid" : "<button onclick='markPaid("" + member + "")'>Mark as Paid</button>"}</td>`;
+    }
+}
+
+function markPaid(member) {
+    payments[member].paid = true;
+    saveData();
+    updatePaymentsTable();
+}
+
+function exportCSV() {
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "Member,Item,Assigned Quantity,Cost\n";
+
+    members.forEach(member => {
+        csvContent += `${member.name},${member.itemName},${member.quantity},MVR ${member.cost.toFixed(2)}\n`;
+    });
+
+    let encodedUri = encodeURI(csvContent);
+    let link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "members_data.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// Ensure data is loaded on page refresh
 updateItemsTable();
 updateItemDropdown();
+updateMembersTable();
+updateUnclaimedTable();
+updatePaymentsTable();
